@@ -42,10 +42,7 @@ object Anagrams extends AnagramsInterface {
 
 
     /** Converts a sentence into its character occurrence list. */
-    def sentenceOccurrences(s: Sentence): Occurrences = s match {
-        case Nil => Nil
-        case w :: tail => wordOccurrences(w.chars.sorted.toString) ::: sentenceOccurrences(tail)
-    }
+    def sentenceOccurrences(s: Sentence): Occurrences = wordOccurrences(s.mkString)
 
     /** The `dictionaryByOccurrences` is a `Map` from different occurrences to a sequence of all
      *  the words that have that occurrence count.
@@ -165,7 +162,7 @@ object Anagrams extends AnagramsInterface {
     def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
 
         def sentenceAnagramsAux(occs: Occurrences): List[Sentence] = {
-            if( occs.isEmpty ) List(List())
+            if( occs.isEmpty ) List(Nil)
             else{
                 for{
                     cmb <- combinations(occs)
